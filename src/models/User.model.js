@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const rol = ["Lector", "Escritor"];
+const roles = ["Lector", "Escritor"];
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   lastname: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  rol: { type: String, required: true, enum: rol },
+  role: { type: String, required: true, enum: roles },
 });
 
 module.exports = mongoose.model("User", UserSchema);

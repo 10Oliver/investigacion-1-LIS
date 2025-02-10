@@ -25,13 +25,23 @@ const createUserRules = [
     .withMessage("La contraseña es obligatoria")
     .isStrongPassword()
     .withMessage("La contraseña no cumple con el mínimo de seguridad"),
-  check("rol")
+  check("role")
     .notEmpty()
     .withMessage("El rol es obligatorio")
     .isIn(["Lector", "Escritor"])
     .withMessage("Rol inválido"),
 ];
 
+const loginRules = [
+  check("email")
+    .notEmpty()
+    .withMessage("El correo es obligatorio")
+    .isEmail()
+    .withMessage("Dirección de correo inválida"),
+  check("password").notEmpty().withMessage("La contraseña es obligatoria"),
+];
+
 module.exports = {
   createUserRules,
+  loginRules,
 };
