@@ -28,7 +28,7 @@ const createUserRules = [
   check("role")
     .notEmpty()
     .withMessage("El rol es obligatorio")
-    .isIn(["Lector", "Escritor"])
+    .isIn(["Lector", "Escritor", "Admin"])
     .withMessage("Rol inválido"),
 ];
 

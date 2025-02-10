@@ -31,9 +31,9 @@ const router = express.Router();
  *               password:
  *                 type: string
  *                 example: "Password123!"
- *               rol:
+ *               role:
  *                  type: String
- *                  enum: [Lector, Escritor]
+ *                  enum: [Lector, Escritor, Admin]
  *                  example: "Lector"
  *     responses:
  *       201:
