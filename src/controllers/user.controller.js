@@ -61,4 +61,15 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { createUser, login };
+const getUsers = async (_req, res) => {
+  try {
+    const users = await UserModel.find().select("-password -__v");
+    return res.json({
+      data: users,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createUser, login, getUsers };
