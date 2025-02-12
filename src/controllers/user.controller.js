@@ -1,5 +1,4 @@
 const UserModel = require("../models/User.model");
-const User = require("../models/User.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -9,7 +8,7 @@ const createUser = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
     req.body.password = hashedPassword;
-    const user = new User(req.body);
+    const user = new UserModel(req.body);
     const newUser = await user.save();
     res.status(201).json({
       message: "Usuario creado existosamente",
