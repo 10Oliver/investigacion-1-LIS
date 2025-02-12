@@ -13,7 +13,9 @@ const authMiddleware = (requiredRole) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      if (requiredRole && decoded.role !== requiredRole) {
+      const requiredRoles =
+        typeof requiredRole === "string" ? [requiredRole] : requiredRole;
+      if (requiredRoles.length > 0 && !requiredRoles.includes(decoded.role)) {
         return res
           .status(403)
           .json({ message: "No tiene los permisos necesarios" });
