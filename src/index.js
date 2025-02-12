@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
 const userRouter = require("./routes/user.router");
+const blogRouter = require("./routes/blog.router");
 const setupSwagger = require("./config/swagger");
 
 const app = express();
@@ -16,6 +17,7 @@ setupSwagger(app);
 
 // Routes
 app.use("/users", userRouter);
+app.use("/blogs", blogRouter);
 
 app.listen(PORT, () => {
   console.log(`Servidor iniciado en http://localhost:${PORT}`);
