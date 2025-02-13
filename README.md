@@ -33,6 +33,12 @@ yarn start
 > [!IMPORTANT]
 > Es necesario colocar las variables de entorno en el `.env`
 
+Si tienes instalado openssl, puedes generar un el `JWT_SECRET` con:
+
+``` bash
+openssl rand -base64 32
+```
+
 ### Documentación
 
 Se ha realizado la respectiva documentación de todos los endpoints usando `Swagger`, el cual se podrá acceder mediante el siguiente enlace:

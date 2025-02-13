@@ -15,6 +15,10 @@ const swaggerOptions = {
         url: "http://localhost:3000",
         description: "Servidor local",
       },
+      {
+        url: "https://investigacion-1-list.onrender.com/",
+        description: "Render - Servidor en linea"
+      }
     ],
     components: {
       securitySchemes: {
