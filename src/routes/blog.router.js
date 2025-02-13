@@ -325,4 +325,70 @@ router.put(
   authMiddleware(["Admin", "Escritor"]),
   blog.updateBlog
 );
+
+/**
+ * @swagger
+ * /blogs/delete/{id}:
+ *    delete:
+ *      summary: Elimina un blog (Lógicamente)
+ *      tags: [Blogs]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: ID del blog a eliminar
+ *      responses:
+ *        204:
+ *          description: Blog eliminado con éxito
+ *        401:
+ *          description: No se ha iniciado sesión
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Inicio de sesión requerido"
+ *                  id:
+ *                    type: string
+ *                    example: "60d0fe4f5311236168a109cb"
+ *        403:
+ *          description: Permisos insuficientes
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "No tiene los permisos necesarios"
+ *        404:
+ *          description: No se ha encontrado el blog a eliminar
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Blog no encontrado"
+ *        500:
+ *          description: Error interno del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Error interno, por favor intenta más tarde"
+ */
+router.delete(
+  "/delete/:id",
+  authMiddleware(["Admin", "Escritor"]),
+  blog.deleteBlog
+);
 module.exports = router;
