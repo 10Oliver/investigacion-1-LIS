@@ -29,6 +29,18 @@ const router = express.Router();
  *           type: string
  *           enum: [Lector, Escritor, Admin]
  *           example: "Lector"
+ *         createdAt:
+ *            type: string
+ *            format: date-time
+ *            example: "2025-02-12T08:55:29Z"
+ *         updatedAt:
+ *            type: string
+ *            format: date-time
+ *            example: "2025-02-12T08:55:29Z"
+ *         deletedAt:
+ *            type: string
+ *            format: date-time
+ *            example: null
  */
 
 /**
@@ -43,7 +55,27 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *            $ref: '#/components/schemas/User'
+ *              type: object
+ *              properties:
+ *                _id:
+ *                  type: string
+ *                  example: "60d0fe4f5311236168a109cb"
+ *                name:
+ *                  type: string
+ *                  example: "Nombre"
+ *                lastname:
+ *                  type: string
+ *                  example: "Apellido"
+ *                email:
+ *                  type: string
+ *                  example: "example@example.net"
+ *                password:
+ *                  type: string
+ *                  example: "Password123!"
+ *                role:
+ *                  type: string
+ *                  enum: [Lector, Escritor, Admin]
+ *                  example: "Lector"
  *     responses:
  *       201:
  *         description: Crea un nuevo usuario y devuelve la confirmación de éxito

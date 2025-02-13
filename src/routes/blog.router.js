@@ -27,10 +27,19 @@ const router = express.Router();
  *           example: "Contenido principal del blog"
  *         created_by:
  *           type: string
- *           example: "Este..."
- *         created_at:
- *            type: date
- *            example: "Fecha"
+ *           $ref: '#/components/schemas/User'
+ *         createdAt:
+ *            type: string
+ *            format: date-time
+ *            example: "2025-02-12T08:55:29Z"
+ *         updatedAt:
+ *            type: string
+ *            format: date-time
+ *            example: "2025-02-12T08:55:29Z"
+ *         deletedAt:
+ *            type: string
+ *            format: date-time
+ *            example: null
  */
 
 /**
