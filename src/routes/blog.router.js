@@ -13,6 +13,18 @@ const router = express.Router();
  *     Blog:
  *       type: object
  *       properties:
+ *         title:
+ *           type: string
+ *           example: "Titulo del blog"
+ *         subtitle:
+ *           type: string
+ *           example: "Subtitulo del blog"
+ *         text:
+ *           type: string
+ *           example: "Contenido principal del blog"
+ *     BlogResponse:
+ *       type: object
+ *       properties:
  *         _id:
  *           type: string
  *           example: "60d0fe4f5311236168a109cb"
@@ -128,7 +140,7 @@ router.post(
  *                data:
  *                  type: array
  *                  items:
- *                    $ref: '#/components/schemas/Blog'
+ *                    $ref: '#/components/schemas/BlogResponse'
  *      401:
  *        description: No se ha iniciado sesión
  *        content:
@@ -168,4 +180,149 @@ router.get(
   blog.listBlog
 );
 
+/**
+ * @swagger
+ * /blogs/find/{id}:
+ *  get:
+ *    summary: Muestra un único blog a base de su id
+ *    tags: [Blogs]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: ID del blog a mostrar
+ *    responses:
+ *      200:
+ *        description: Lista el blog solicitado
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                blog:
+ *                  $ref: '#/components/schemas/BlogResponse'
+ *
+ *      401:
+ *        description: No se ha iniciado sesión
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: "Inicio de sesión requerido"
+ *      403:
+ *        description: Permisos insuficientes
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: "No tiene los permisos necesarios"
+ *      500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *             example:
+ *               message: "Error interno, por favor intenta más tarde"
+ */
+
+router.get(
+  "/find/:id",
+  authMiddleware(["Escritor", "Admin", "Lector"]),
+  blog.findBlog
+);
+
+/**
+ * @swagger
+ * /blogs/update/{id}:
+ *    put:
+ *      summary: Actualiza los datos de un blog
+ *      tags: [Blogs]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: ID del blog a actualizar
+ *      requestBody:
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Blog'
+ *      responses:
+ *        200:
+ *          description: Blog creado con éxito
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Blog actualizado con éxito"
+ *        401:
+ *          description: No se ha iniciado sesión
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Inicio de sesión requerido"
+ *                  id:
+ *                    type: string
+ *                    example: "60d0fe4f5311236168a109cb"
+ *        403:
+ *          description: Permisos insuficientes
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "No tiene los permisos necesarios"
+ *        404:
+ *          description: No se ha encontrado el blog a actualizar
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Blog no encontrado"
+ *        500:
+ *          description: Error interno del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Error interno, por favor intenta más tarde"
+ */
+
+router.put(
+  "/update/:id",
+  createBlogRules,
+  validateRequest,
+  authMiddleware(["Admin", "Escritor"]),
+  blog.updateBlog
+);
 module.exports = router;

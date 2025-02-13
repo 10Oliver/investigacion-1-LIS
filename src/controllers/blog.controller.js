@@ -31,7 +31,45 @@ const listBlog = async (_req, res) => {
   }
 };
 
+const findBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const blog = await Blog.findOne({ _id: id, deletedAt: null }).populate({
+      path: "created_by",
+      select: "-password -__v",
+    });
+    res.status(200).json({ blog: blog });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updateBlog = async (req, res) => {
+  try {
+    const {
+      params: { id },
+      body,
+    } = req;
+
+    const updatedBlog = await Blog.findByIdAndUpdate(id, body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedBlog) {
+      return res.status(404).json({ message: "Blog no encontrado" });
+    }
+
+    return res.status(200).json({
+      message: "Blog actualizado con éxito",
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 module.exports = {
   createBlog,
   listBlog,
+  findBlog,
+  updateBlog,
 };
