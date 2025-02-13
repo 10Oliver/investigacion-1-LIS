@@ -62,7 +62,9 @@ const login = async (req, res) => {
 
 const getUsers = async (_req, res) => {
   try {
-    const users = await UserModel.find().select("-password -__v");
+    const users = await UserModel.find({ deletedAt: null }).select(
+      "-password -__v"
+    );
     return res.json({
       data: users,
     });

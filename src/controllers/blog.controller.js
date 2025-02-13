@@ -18,7 +18,10 @@ const createBlog = async (req, res) => {
 
 const listBlog = async (_req, res) => {
   try {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find({ deletedAt: null }).populate({
+      path: "created_by",
+      select: "-password -__v",
+    });
 
     res.status(200).json({
       data: blogs,
