@@ -102,4 +102,61 @@ router.post(
   blog.createBlog
 );
 
+/**
+ * @swagger
+ * /blogs/list:
+ *  get:
+ *    summary: Lista todos los blogs
+ *    tags: [Blogs]
+ *    responses:
+ *      200:
+ *        description: Todos los blogs
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                data:
+ *                  type: array
+ *                  items:
+ *                    $ref: '#/components/schemas/Blog'
+ *      401:
+ *        description: No se ha iniciado sesión
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: "Inicio de sesión requerido"
+ *      403:
+ *        description: Permisos insuficientes
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: "No tiene los permisos necesarios"
+ *      500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *             example:
+ *               message: "Error interno, por favor intenta más tarde"
+ */
+
+router.get(
+  "/list",
+  authMiddleware(["Escritor", "Admin", "Lector"]),
+  blog.listBlog
+);
+
 module.exports = router;
